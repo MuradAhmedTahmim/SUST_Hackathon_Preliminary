@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .ai_helper import improve_text_with_ai
 # Create your views here.
 import re
 from rest_framework.decorators import api_view
@@ -235,5 +235,7 @@ def analyze_ticket(request):
         "confidence": 0.75 if relevant_transaction_id else 0.45,
         "reason_codes": reason_codes,
     }
+
+    response_data = improve_text_with_ai(data, response_data)
 
     return Response(response_data, status=status.HTTP_200_OK)
